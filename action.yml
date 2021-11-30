@@ -22,7 +22,7 @@ runs:
     run: |
       python -m pip wheel --no-deps . -w wheelhouse
       delocate-wheel -w dist -v wheelhouse/*.whl
-      rename -e 's/10_15/10_13' dist/*.whl
+      rename -e 's/10_15/10_13/' dist/*.whl
 
   - uses: actions/upload-artifact@v2
     with:
