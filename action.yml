@@ -1,0 +1,21 @@
+name: 'manymac'
+description: 'Build distributable macOS python wheels'
+inputs:
+  name:
+    description: "The artifact name for in-action storage"
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - run: brew install rename
+  - run: python -m pip install --upgrade pip setuptools wheel delocate
+  - uses: actions/checkout@v2
+  - run: |
+      python -m pip wheel --no-deps . -w wheelhouse
+      delocate-wheel -w dist -v wheelhouse/*.whl
+      rename -e 's/10_15/10_13' dist/*.whl
+    shell: bash
+  - uses: actions/upload-artifact@v2
+    with:
+      name: ${{ inputs.name }}
+      path: dist/*.whl
