@@ -20,7 +20,7 @@ runs:
   - name: Build and fix the wheel
     shell: bash
     run: |
-      python -m pip wheel --no-deps . -w wheelhouse
+      python -m pip wheel --no-deps -w wheelhouse --no-build-isolation .
       delocate-wheel -w dist -v wheelhouse/*.whl
       rename -e 's/10_15/10_13/' dist/*.whl
 
